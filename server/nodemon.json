@@ -1,0 +1,6 @@
+{
+  "env":{
+    "MONGO_USER":"root",
+    "MONGO_PW":"blackw0rm#1"
+  }
+}

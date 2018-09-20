@@ -1,7 +1,16 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
+const bodyParser = require('body-parser');
+
+// connect to mongodb
+mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PW}@ds119072.mlab.com:19072/graphql`, {
+    useNewUrlParser: true
+}).catch(err => {
+    console.log(err);
+});
 
 // Handle CORS
 app.use((req, res, next) => {
@@ -14,8 +23,9 @@ app.use((req, res, next) => {
 });
 
 // the graphql route
-app.use('/graphl', graphqlHTTP({
-    schema
+app.use('/graphql', bodyParser.json(), graphqlHTTP({
+    schema,
+    graphiql: true
 }));
 
 // handle errors for not found router (404)
@@ -33,7 +43,6 @@ app.use((error, req, res, next) => {
         }
     });
 });
-
 
 
 module.exports = app;
