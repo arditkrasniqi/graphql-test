@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-// routes
-const routes = require('./routes/routes');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./schema/schema');
 
 // Handle CORS
 app.use((req, res, next) => {
@@ -13,8 +13,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// using the routes
-app.use(routes);
+// the graphql route
+app.use('/graphl', graphqlHTTP({
+    schema
+}));
 
 // handle errors for not found router (404)
 app.use((req, res, next) => {
