@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 // connect to mongodb
 // mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PW}@ds119072.mlab.com:19072/graphql`, {
-mongoose.connect('mongodb://127.0.0.1:27017', {
+mongoose.connect('mongodb://127.0.0.1:27017/graphdb', {
     useNewUrlParser: true
 }).catch(err => {
     console.log(err);
