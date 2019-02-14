@@ -10,8 +10,8 @@ const {
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLID,
     GraphQLInt,
+    GraphQLID,
     GraphQLNonNull
 } = graphql;
 
@@ -26,13 +26,17 @@ const Mutation = new GraphQLObjectType({
                 },
                 age: {
                     type: new GraphQLNonNull(GraphQLInt)
+                },
+                email: {
+                    type: new GraphQLNonNull(GraphQLString)
                 }
             },
             resolve: (parent, args) => {
                 let author = new Author({
                     _id: new mongoose.Types.ObjectId(),
                     name: args.name,
-                    age: args.age
+                    age: args.age,
+                    email: args.email
                 });
                 return author.save();
             }
@@ -46,15 +50,16 @@ const Mutation = new GraphQLObjectType({
                 genre: {
                     type: new GraphQLNonNull(GraphQLString)
                 },
-                authorId: {
-                    type: new GraphQLNonNull(GraphQLID)
+                authorEmail: {
+                    type: new GraphQLNonNull(GraphQLString)
                 }
             },
-            resolve: (parent, args) => {
+            resolve: async (parent, args) => {
+                const author = await Author.findOne({email: args.authorEmail});
                 let book = new Book({
                     name: args.name,
                     genre: args.genre,
-                    authorId: '5bebe3af06888405e02e9337'
+                    authorId: author._id
                 });
                 return book.save();
             }

@@ -1,8 +1,4 @@
 const graphql = require('graphql');
-const {
-    books,
-    authors
-} = require('../dummy_data/data');
 const Author = require('../models/Author');
 const Book = require('../models/book');
 const {
@@ -47,6 +43,9 @@ const AuthorType = new GraphQLObjectType({
         age: {
             type: GraphQLInt
         },
+        email: {
+            type: GraphQLString
+        },
         books: {
             type: new GraphQLList(BookType),
             resolve: (parent, args) => {
@@ -75,12 +74,12 @@ const RootQuery = new GraphQLObjectType({
         author: {
             type: AuthorType,
             args: {
-                id: {
-                    type: GraphQLID
+                email: {
+                    type: GraphQLString
                 }
             },
             resolve: (parent, args) => {
-                return Author.findById(args.id);
+                return Author.find({email: args.email});
             }
         },
         books: {
