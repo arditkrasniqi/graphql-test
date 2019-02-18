@@ -41,6 +41,18 @@ const Mutation = new GraphQLObjectType({
                 return author.save();
             }
         },
+        deleteAuthor: {
+            type: AuthorType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLID)
+                }
+            },
+            resolve: async (parent, args) => {
+                await Book.deleteMany({authorId: args.id}).exec();
+                return Author.deleteMany({ _id: args.id });
+            }
+        },
         addBook: {
             type: BookType,
             args: {
@@ -55,7 +67,7 @@ const Mutation = new GraphQLObjectType({
                 }
             },
             resolve: async (parent, args) => {
-                const author = await Author.findOne({email: args.authorEmail});
+                const author = await Author.findOne({ email: args.authorEmail });
                 let book = new Book({
                     name: args.name,
                     genre: args.genre,

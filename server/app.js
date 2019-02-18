@@ -8,7 +8,7 @@ const cors = require('cors');
 
 // connect to mongodb
 mongoose.connect(`mongodb://127.0.0.1:27017/graphdb`, {
-// mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PW}@ds119072.mlab.com:19072/graphql`, {
+    // mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PW}@ds119072.mlab.com:19072/graphql`, {
     useNewUrlParser: true
 }).catch(err => {
     console.log(err);

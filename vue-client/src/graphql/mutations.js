@@ -18,3 +18,11 @@ export const bookMutation = gql`
     }
   }
 `;
+
+export const deleteAuthor = gql`
+  mutation deleteAuthor($id: ID!){
+    deleteAuthor(id:$id){
+      name
+    }
+  }
+`;
